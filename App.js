@@ -2,10 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import KindOfFoodPage from './src/pages/KindOfFoodPage';
+
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <KindOfFoodPage />
       <StatusBar style="auto" />
     </View>
   );
