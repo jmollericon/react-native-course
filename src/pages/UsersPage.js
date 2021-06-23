@@ -1,12 +1,14 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const Food = ({name}) => {
+import Users from '../components/Users'
+
+const UsersPage = () => {
   return (
     <View>
-      <Text>{name}</Text>
+      <Users />
     </View>
   )
 }
 
-export default Food
+export default UsersPage

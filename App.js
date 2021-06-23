@@ -3,11 +3,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import KindOfFoodPage from './src/pages/KindOfFoodPage';
+import UsersPage from './src/pages/UsersPage';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <KindOfFoodPage />
+      {/* <KindOfFoodPage /> */}
+      <UsersPage />
       <StatusBar style="auto" />
     </View>
   );

@@ -7,8 +7,8 @@ const KindOfFoodPage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tipos de comida</Text>
-
       <KindOfFood title='Frutas'/>
+      <KindOfFood title='Verduras'/>
     </View>
   )
 }
