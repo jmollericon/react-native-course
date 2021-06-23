@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const Users = () => {
 
@@ -19,17 +19,26 @@ const Users = () => {
   }
 
   const renderUsers = () => {
-    return <View>
+    return (users.length==0) ?
+    <View><Text>Cargando...</Text></View>
+    :<View>
       {users.map(user => <Text key={user.id}>{user.name}</Text>)}
     </View>
   }
 
   return (
     <View>
-      <Text>Lista de Usuarios</Text>
+      <Text style={styles.title}>Lista de Usuarios</Text>
       {renderUsers()}
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+});
 
 export default Users
