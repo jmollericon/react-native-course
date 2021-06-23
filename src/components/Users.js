@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
@@ -10,11 +11,16 @@ const Users = () => {
   }, [])
 
   const getUsers = () => {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    /* fetch('https://jsonplaceholder.typicode.com/users')
     .then(response => response.json())
     .then(jsonData => {
       console.log('response:', jsonData)
       setUsers(jsonData)
+    }) */
+    axios.get('https://jsonplaceholder.typicode.com/users')
+    .then(({data}) => {
+      console.log('response:', data)
+      setUsers(data)
     })
   }
 
