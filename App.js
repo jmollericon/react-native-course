@@ -1,13 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
-import CalculadoraV2 from './src/components/CalculadoraV2';
+import CiclosDeVida from './CiclosDeVida';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <CalculadoraV2 />
+      <CiclosDeVida />
       <StatusBar style="auto" />
     </View>
   );
