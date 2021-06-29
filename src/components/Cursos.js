@@ -1,47 +1,102 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 
 import CardCurso from "./CardCurso";
 import FormCurso from "./FormCurso";
 
-
 const Cursos = () => {
-    const [cursos, setCursos] = useState([]);
-    const [showForm, setShowForm] = useState(false);
+  const [cursos, setCursos] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [titleForm, setTitleForm] = useState("Agregar Curso");
+  const [textSubmitFormButton, setTextSubmitFormButton] = useState("Agregar");
+  const [idCursoEdit, setIdCursoEdit] = useState(null);
 
-    useEffect(()=>{
+  const [formCurso, setFormCurso] = useState({
+    titulo: "",
+    desc: "",
+    imagen: "",
+  });
+
+  useEffect(() => {
+    getCursos();
+  }, []);
+
+  const getCursos = () => {
+    axios.get("http://localhost:8080/api/cursos").then((response) => {
+      console.log("cursos", response.data);
+      setCursos(response.data);
+    });
+  };
+
+  const deleteCurso = (idCurso) => {
+    axios
+      .delete(`http://localhost:8080/api/cursos/${idCurso}`)
+      .then((response) => {
         getCursos();
-    },[]);
+      });
+  };
 
-    const getCursos = () =>{
-        axios.get("http://localhost:8080/api/cursos")
-        .then(response => {
-            console.log("cursos", response.data);
-            setCursos(response.data);
-        })
+  const editarCurso = (idCurso) => {
+    setTitleForm("Editar Curso");
+    setTextSubmitFormButton("Actualizar");
+    const curso = cursos.find((curso) => curso.id == idCurso);
+    if (curso) {
+      const nuevoValor = {
+        titulo: curso.titulo,
+        desc: curso.descripcion,
+        imagen: curso.imagen,
+      };
+
+      setFormCurso({ ...formCurso, ...nuevoValor });
+      setIdCursoEdit(idCurso);
     }
+    setShowForm(true);
+  };
 
-    const deleteCurso = (idCurso) =>{
-        axios.delete(`http://localhost:8080/api/cursos/${idCurso}`)
-        .then(response => {
-            getCursos();
-        });
-    }
-
-    const renderCursos = () => {
-        return <>
-            {cursos.map(curso => <CardCurso key={curso.id} {...curso} deleteCurso={deleteCurso}/>)}
-        </>
-    }
-
-    const addCurso = () =>{
-        console.log("addCurso");
-        setShowForm(!showForm);
-    }
-
+  const renderCursos = () => {
     return (
-      <View style={styles.container}>
+      <>
+        {cursos.map((curso) => (
+          <CardCurso
+            key={curso.id}
+            {...curso}
+            deleteCurso={deleteCurso}
+            editarCurso={editarCurso}
+          />
+        ))}
+      </>
+    );
+  };
+
+  const resetForm = () => {
+    setFormCurso({
+      titulo: "",
+      desc: "",
+      imagen: "",
+    });
+    setTitleForm("Agregar Curso");
+    setTextSubmitFormButton("Agregar");
+  };
+
+  const addCurso = () => {
+    console.log("addCurso");
+    resetForm();
+    setShowForm(!showForm);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
         <View
           style={{
             flexDirection: "row",
@@ -56,24 +111,35 @@ const Cursos = () => {
           </TouchableOpacity>
         </View>
 
+        {!showForm ? (
+          renderCursos()
+        ) : (
+          <FormCurso
+            setShowForm={setShowForm}
+            getCursos={getCursos}
+            titleForm={titleForm}
+            textSubmitFormButton={textSubmitFormButton}
+            curso={formCurso}
+            idCursoEdit={idCursoEdit}
+          />
+        )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-        {!showForm?renderCursos(): <FormCurso setShowForm={setShowForm} getCursos={getCursos}/>}
-
-      </View>
-    );
-}
-
-export default Cursos
+export default Cursos;
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        //alignItems: 'center',
-        padding: 5
-    },
-    textTitle:{
-        fontSize:32,
-        fontWeight: 'bold'
-    }
-
-})
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollView: {
+    marginHorizontal: 20,
+  },
+  textTitle: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+});
