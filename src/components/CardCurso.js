@@ -8,19 +8,24 @@ const CardCurso = ({
     imagen,
     descripcion,
     deleteCurso,
-    editarCurso
+    editarCurso,
+    verCurso
 }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textTitle}>{titulo}</Text>
-      <Image
-        style={{ width: 150, height: 150 }}
-        resizeMode="contain"
-        source={{
-          uri: imagen,
-        }}
-      />
+      <TouchableOpacity
+        onPress={() => verCurso(id)}
+      >
+        <Text style={styles.textTitle}>{titulo}</Text>
+        <Image
+          style={{ width: 150, height: 150 }}
+          resizeMode="contain"
+          source={{
+            uri: imagen,
+          }}
+        />
+      </TouchableOpacity>
       <View style={{ width: "100%" }}>
         <Text style={{ alignSelf: "center" }}>{descripcion}</Text>
         <View

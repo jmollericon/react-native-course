@@ -63,6 +63,10 @@ const Cursos = () => {
     setShowForm(true);
   };
 
+  const verCurso = (idCurso) => {
+    console.log('ver curso')
+  }
+
   const renderCursos = () => {
     return (
       <>
@@ -72,6 +76,7 @@ const Cursos = () => {
             {...curso}
             deleteCurso={deleteCurso}
             editarCurso={editarCurso}
+            verCurso={verCurso}
           />
         ))}
       </>
