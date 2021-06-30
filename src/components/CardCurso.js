@@ -9,13 +9,13 @@ const CardCurso = ({
     descripcion,
     deleteCurso,
     editarCurso,
-    verCurso
+    toDetailScreen
 }) => {
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => verCurso(id)}
+        onPress={() => toDetailScreen(id)}
       >
         <Text style={styles.textTitle}>{titulo}</Text>
         <Image
